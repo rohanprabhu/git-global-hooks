@@ -1,0 +1,19 @@
+#!/bin/bash
+
+exec < /dev/tty
+
+reset_author() {
+    echo ""
+    echo "Found an author reset lock file, ammending the last commit to point to the correct author"
+    echo "NOTE: You'll see a warning message by git stating incorrect author usage, that can be ignored"
+    echo ""
+    name=`git config user.name`
+    email=`git config user.email`
+    git commit --amend --author "$name <$email>"
+}
+
+if [[ -f "__author_reset_lock" ]]; then
+    rm __author_reset_lock
+    reset_author
+fi
+

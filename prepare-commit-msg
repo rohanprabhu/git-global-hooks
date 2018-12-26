@@ -1,0 +1,21 @@
+#!/bin/bash
+
+exec < /dev/tty
+
+if [[ -z `git config --get user.email` ]]
+then
+    echo "No author set. Select profile: (c)ompany, (p)ersonal"
+    read author_type
+
+    if [[ "$author_type" == "c" ]]
+    then
+        git config user.email "rohan@mitter.io"
+    else
+        git config user.email "rohan@rohanprabhu.com"
+    fi
+
+    touch __author_reset_lock
+
+    git config user.name "Rohan Prabhu"
+fi
+
